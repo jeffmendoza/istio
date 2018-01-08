@@ -239,12 +239,17 @@ function update_istio_addons() {
 
   execute_sed 's/^/    /' grafana-config/custom.ini
   execute_sed 's/^/    /' grafana-config/istio-dashboard.json
+  execute_sed 's/^/    /' grafana-config/traffic-shifting.json
   execute_sed '/{CUSTOM_INI}/ {
       r grafana-config/custom.ini
       d
     }' grafana.yaml.tmpl
   execute_sed '/{ISTIO_DASHBOARD_JSON}/ {
       r grafana-config/istio-dashboard.json
+      d
+    }' grafana.yaml.tmpl
+  execute_sed '/{TRAFFIC_SHIFTING_JSON}/ {
+      r grafana-config/traffic-shifting.json
       d
     }' grafana.yaml.tmpl
 
