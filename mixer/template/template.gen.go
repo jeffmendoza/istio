@@ -43,6 +43,8 @@ import (
 
 	"istio.io/istio/mixer/template/checknothing"
 
+	"istio.io/istio/mixer/template/edge"
+
 	"istio.io/istio/mixer/template/listentry"
 
 	"istio.io/istio/mixer/template/logentry"
@@ -1189,6 +1191,130 @@ var (
 
 				// Instantiate a new builder for the instance.
 				builder, errp := newBuilder_checknothing_Template(expb, param.(*checknothing.InstanceParam))
+				if !errp.IsNil() {
+					return nil, errp.AsCompilationError(instanceName)
+				}
+
+				return func(attr attribute.Bag) (interface{}, error) {
+					// Use the instantiated builder (that this fn closes over) to construct an instance.
+					e, errp := builder.build(attr)
+					if !errp.IsNil() {
+						err := errp.AsEvaluationError(instanceName)
+						log.Error(err.Error())
+						return nil, err
+					}
+
+					e.Name = instanceName
+					return e, nil
+				}, nil
+			},
+		},
+
+		edge.TemplateName: {
+			Name:               edge.TemplateName,
+			Impl:               "edge",
+			CtrCfg:             &edge.InstanceParam{},
+			Variety:            istio_adapter_model_v1beta1.TEMPLATE_VARIETY_REPORT,
+			BldrInterfaceName:  edge.TemplateName + "." + "HandlerBuilder",
+			HndlrInterfaceName: edge.TemplateName + "." + "Handler",
+			BuilderSupportsTemplate: func(hndlrBuilder adapter.HandlerBuilder) bool {
+				_, ok := hndlrBuilder.(edge.HandlerBuilder)
+				return ok
+			},
+			HandlerSupportsTemplate: func(hndlr adapter.Handler) bool {
+				_, ok := hndlr.(edge.Handler)
+				return ok
+			},
+			InferType: func(cp proto.Message, tEvalFn template.TypeEvalFn) (proto.Message, error) {
+
+				var BuildTemplate func(param *edge.InstanceParam,
+					path string) (*edge.Type, error)
+
+				_ = BuildTemplate
+
+				BuildTemplate = func(param *edge.InstanceParam,
+					path string) (*edge.Type, error) {
+
+					if param == nil {
+						return nil, nil
+					}
+
+					infrdType := &edge.Type{}
+
+					var err error = nil
+
+					if param.Source != "" {
+						if t, e := tEvalFn(param.Source); e != nil || t != istio_policy_v1beta1.STRING {
+							if e != nil {
+								return nil, fmt.Errorf("failed to evaluate expression for field '%s': %v", path+"Source", e)
+							}
+							return nil, fmt.Errorf("error type checking for field '%s': Evaluated expression type %v want %v", path+"Source", t, istio_policy_v1beta1.STRING)
+						}
+					}
+
+					if param.Destination != "" {
+						if t, e := tEvalFn(param.Destination); e != nil || t != istio_policy_v1beta1.STRING {
+							if e != nil {
+								return nil, fmt.Errorf("failed to evaluate expression for field '%s': %v", path+"Destination", e)
+							}
+							return nil, fmt.Errorf("error type checking for field '%s': Evaluated expression type %v want %v", path+"Destination", t, istio_policy_v1beta1.STRING)
+						}
+					}
+
+					return infrdType, err
+
+				}
+
+				instParam := cp.(*edge.InstanceParam)
+
+				return BuildTemplate(instParam, "")
+			},
+
+			SetType: func(types map[string]proto.Message, builder adapter.HandlerBuilder) {
+				// Mixer framework should have ensured the type safety.
+				castedBuilder := builder.(edge.HandlerBuilder)
+				castedTypes := make(map[string]*edge.Type, len(types))
+				for k, v := range types {
+					// Mixer framework should have ensured the type safety.
+					v1 := v.(*edge.Type)
+					castedTypes[k] = v1
+				}
+				castedBuilder.SetEdgeTypes(castedTypes)
+			},
+
+			// DispatchReport dispatches the instances to the handler.
+			DispatchReport: func(ctx context.Context, handler adapter.Handler, inst []interface{}) error {
+
+				// Convert the instances from the generic []interface{}, to their specialized type.
+				instances := make([]*edge.Instance, len(inst))
+				for i, instance := range inst {
+					instances[i] = instance.(*edge.Instance)
+				}
+
+				// Invoke the handler.
+				if err := handler.(edge.Handler).HandleEdge(ctx, instances); err != nil {
+					return fmt.Errorf("failed to report all values: %v", err)
+				}
+				return nil
+			},
+
+			// CreateInstanceBuilder creates a new template.InstanceBuilderFN based on the supplied instance parameters. It uses
+			// the expression builder to create a new instance of a builder struct for the instance type. Created
+			// InstanceBuilderFn closes over this struct. When InstanceBuilderFn is called it, in turn, calls into
+			// the builder with an attribute bag.
+			//
+			// See template.CreateInstanceBuilderFn for more details.
+			CreateInstanceBuilder: func(instanceName string, param proto.Message, expb *compiled.ExpressionBuilder) (template.InstanceBuilderFn, error) {
+
+				// If the parameter is nil. Simply return nil. The builder, then, will also return nil.
+				if param == nil {
+					return func(attr attribute.Bag) (interface{}, error) {
+						return nil, nil
+					}, nil
+				}
+
+				// Instantiate a new builder for the instance.
+				builder, errp := newBuilder_edge_Template(expb, param.(*edge.InstanceParam))
 				if !errp.IsNil() {
 					return nil, errp.AsCompilationError(instanceName)
 				}
@@ -3308,6 +3434,120 @@ func (b *builder_checknothing_Template) build(
 	_ = vIface
 
 	r := &checknothing.Instance{}
+
+	return r, template.ErrorPath{}
+}
+
+// builder struct for constructing an instance of Template.
+type builder_edge_Template struct {
+
+	// builder for field source: string.
+
+	bldSource compiled.Expression
+
+	// builder for field destination: string.
+
+	bldDestination compiled.Expression
+} // builder_edge_Template
+
+// Instantiates and returns a new builder for Template, based on the provided instance parameter.
+func newBuilder_edge_Template(
+	expb *compiled.ExpressionBuilder,
+	param *edge.InstanceParam) (*builder_edge_Template, template.ErrorPath) {
+
+	// If the parameter is nil. Simply return nil. The builder, then, will also return nil.
+	if param == nil {
+		return nil, template.ErrorPath{}
+	}
+
+	b := &builder_edge_Template{}
+
+	var exp compiled.Expression
+	_ = exp
+	var err error
+	_ = err
+	var errp template.ErrorPath
+	_ = errp
+	var expType istio_policy_v1beta1.ValueType
+	_ = expType
+
+	if param.Source == "" {
+		b.bldSource = nil
+	} else {
+		b.bldSource, expType, err = expb.Compile(param.Source)
+		if err != nil {
+			return nil, template.NewErrorPath("Source", err)
+		}
+
+		if expType != istio_policy_v1beta1.STRING {
+			err = fmt.Errorf("instance field type mismatch: expected='%v', actual='%v', expression='%s'", istio_policy_v1beta1.STRING, expType, param.Source)
+			return nil, template.NewErrorPath("Source", err)
+		}
+
+	}
+
+	if param.Destination == "" {
+		b.bldDestination = nil
+	} else {
+		b.bldDestination, expType, err = expb.Compile(param.Destination)
+		if err != nil {
+			return nil, template.NewErrorPath("Destination", err)
+		}
+
+		if expType != istio_policy_v1beta1.STRING {
+			err = fmt.Errorf("instance field type mismatch: expected='%v', actual='%v', expression='%s'", istio_policy_v1beta1.STRING, expType, param.Destination)
+			return nil, template.NewErrorPath("Destination", err)
+		}
+
+	}
+
+	return b, template.ErrorPath{}
+}
+
+// build and return the instance, given a set of attributes.
+func (b *builder_edge_Template) build(
+	attrs attribute.Bag) (*edge.Instance, template.ErrorPath) {
+
+	if b == nil {
+		return nil, template.ErrorPath{}
+	}
+
+	var err error
+	_ = err
+	var errp template.ErrorPath
+	_ = errp
+	var vBool bool
+	_ = vBool
+	var vInt int64
+	_ = vInt
+	var vString string
+	_ = vString
+	var vDouble float64
+	_ = vDouble
+	var vIface interface{}
+	_ = vIface
+
+	r := &edge.Instance{}
+
+	if b.bldSource != nil {
+
+		vString, err = b.bldSource.EvaluateString(attrs)
+		if err != nil {
+			return nil, template.NewErrorPath("Source", err)
+		}
+		r.Source = vString
+
+	}
+
+	if b.bldDestination != nil {
+
+		vString, err = b.bldDestination.EvaluateString(attrs)
+		if err != nil {
+			return nil, template.NewErrorPath("Destination", err)
+		}
+		r.Destination = vString
+
+	}
 
 	return r, template.ErrorPath{}
 }

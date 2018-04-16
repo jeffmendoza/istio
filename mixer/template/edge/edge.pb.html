@@ -1,0 +1,60 @@
+---
+title: edge
+layout: protoc-gen-docs
+number_of_entries: 1
+---
+<p>The <code>logentry</code> template represents an individual entry within a log.</p>
+
+<h2 id="Template">Template</h2>
+<section>
+<p>The <code>edge</code> template represents an edge in the mesh graph</p>
+
+<p>When writing the configuration, the value for the fields associated
+with this template can either be a literal or an
+<a href="https://istio.io/docs/reference/config/mixer/expression-language.html">expression</a>. Please
+note that if the datatype of a field is not
+istio.mixer.adapter.model.v1beta1.Value, then the expression&rsquo;s
+<a href="https://istio.io/docs/reference/config/mixer/expression-language.html#type-checking">inferred
+type</a>
+must match the datatype of the field.</p>
+
+<p>Example config:</p>
+
+<pre><code class="language-yaml">apiVersion: &quot;config.istio.io/v1alpha2&quot;
+kind: edge
+metadata:
+  name: default
+  namespace: istio-system
+spec:
+  source: source.service | &quot;Unknown&quot;
+  destination: destination.service | &quot;Unknown&quot;
+</code></pre>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Template.source">
+<td><code>source</code></td>
+<td><code>string</code></td>
+<td>
+<p>Source of edge.</p>
+
+</td>
+</tr>
+<tr id="Template.destination">
+<td><code>destination</code></td>
+<td><code>string</code></td>
+<td>
+<p>Destination of edge</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

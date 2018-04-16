@@ -1,0 +1,32 @@
+# Configuration for default graph edge
+apiVersion: "config.istio.io/v1alpha2"
+kind: edge
+metadata:
+  name: default
+  namespace: istio-system
+spec:
+  source: source.service | "unknown"
+  destination: destination.service | "unknown"
+---
+# Configuration for a fluentd handler
+apiVersion: "config.istio.io/v1alpha2"
+kind: contextgraph
+metadata:
+  name: handler
+  namespace: istio-system
+spec:
+  projectId: myproject
+---
+# Rule to send logentry instances to the fluentd handler
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: edgetocontext
+  namespace: istio-system
+spec:
+  match: "true" # match for all requests
+  actions:
+   - handler: handler.contextgraph
+     instances:
+     - default.edge
+---
