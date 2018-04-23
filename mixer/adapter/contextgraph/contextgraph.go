@@ -23,6 +23,11 @@ import (
 	"istio.io/istio/mixer/adapter/contextgraph/config"
 	"istio.io/istio/mixer/pkg/adapter"
 	"istio.io/istio/mixer/template/edge"
+	"k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/watch"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 )
 
 type (
@@ -30,8 +35,10 @@ type (
 		projectID string
 	}
 	handler struct {
-		client string
-		env    adapter.Env
+		client    string
+		env       adapter.Env
+		clientset *kubernetes.Clientset
+		watchInt  watch.Interface
 	}
 )
 
@@ -46,11 +53,29 @@ func (b *builder) Build(ctx context.Context, env adapter.Env) (adapter.Handler, 
 	h := &handler{
 		env: env,
 	}
+
+	// Whatever needed to talk to contextgraph API
 	// h.client, err = newGoogleClient(b.projectID)
 	// if err != nil {
 	// 	return nil, err
 	// }
 	h.client = ""
+
+	// Fixme use in-cluster config
+	// This is setup for running mixs through 'kubectl proxy'
+	config := &rest.Config{
+		Host: "localhost:8001",
+	}
+
+	clientset, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+	h.clientset = clientset
+
+	// Do not use go routines
+	env.ScheduleDaemon(h.serviceWatch)
+
 	return h, nil
 }
 
@@ -62,7 +87,7 @@ func (b *builder) SetAdapterConfig(cfg adapter.Config) {
 
 // adapter.HandlerBuilder#Validate
 func (b *builder) Validate() (ce *adapter.ConfigErrors) {
-	// Error on empty projid
+	// FIXME Error on empty projid
 	return
 }
 
@@ -77,6 +102,7 @@ func (h *handler) HandleEdge(ctx context.Context, insts []*edge.Instance) error 
 	for _, i := range insts {
 		h.env.Logger().Debugf("Connection Reported: %v to %v", i.Source, i.Destination)
 
+		// Would add a graph edge here
 		//h.client.addToGraph(i.Source, i.Destination)
 
 	}
@@ -85,8 +111,37 @@ func (h *handler) HandleEdge(ctx context.Context, insts []*edge.Instance) error 
 
 // adapter.Handler#Close
 func (h *handler) Close() error {
+	// close API client here
 	//h.client.Close
+
+	if h.watchInt != nil {
+		h.watchInt.Stop()
+	}
+
 	return nil
+}
+
+func (h *handler) serviceWatch() {
+	// Watch Services
+	w, err := h.clientset.CoreV1().Services("").Watch(metav1.ListOptions{})
+	if err != nil {
+		h.env.Logger().Errorf("Error starting service watch: %s", err)
+		return
+	}
+	h.watchInt = w
+	c := w.ResultChan()
+	for {
+		e, more := <-c
+		if !more {
+			h.env.Logger().Debugf("Service watch channel closed, exiting")
+			break
+		}
+
+		//FIXME do something with the service info, send to contextgraph
+		h.env.Logger().Debugf("Event: %s\n", e.Type)
+		s := e.Object.(*v1.Service)
+		h.env.Logger().Debugf("Service: %v \tNamespace: %v\n", s.Name, s.Namespace)
+	}
 }
 
 ////////////////// Bootstrap //////////////////////////
