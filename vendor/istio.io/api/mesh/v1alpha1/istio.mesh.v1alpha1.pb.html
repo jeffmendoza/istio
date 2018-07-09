@@ -4,7 +4,7 @@ layout: protoc-gen-docs
 generator: protoc-gen-docs
 aliases:
   - /docs/reference/config/service-mesh.html
-number_of_entries: 8
+number_of_entries: 13
 ---
 <h2 id="AuthenticationPolicy">AuthenticationPolicy</h2>
 <section>
@@ -375,6 +375,30 @@ through ServiceEntries</p>
 </tbody>
 </table>
 </section>
+<h2 id="Percent">Percent</h2>
+<section>
+<p>Identifies a percentage.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Percent-value">
+<td><code>value</code></td>
+<td><code>double</code></td>
+<td>
+<p>Valid range: <code>[0.0, 100.0]</code></p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
 <h2 id="ProxyConfig">ProxyConfig</h2>
 <section>
 <p>ProxyConfig defines variables for individual Envoy instances.</p>
@@ -464,7 +488,8 @@ MUST BE greater than <em>drain</em>duration_ parameter.</p>
 <td><code>zipkinAddress</code></td>
 <td><code>string</code></td>
 <td>
-<p>Address of the Zipkin service (e.g. <em>zipkin:9411</em>).</p>
+<p>Address of the Zipkin service (e.g. <em>zipkin:9411</em>).
+Deprecated - will use trace_collector first, fall back to this.</p>
 
 </td>
 </tr>
@@ -556,6 +581,22 @@ Increase the value of this field if you find that the metrics from Envoys are tr
 
 </td>
 </tr>
+<tr id="ProxyConfig-trace_collector">
+<td><code>traceCollector</code></td>
+<td><code><a href="#TraceCollector">TraceCollector</a></code></td>
+<td>
+<p>Provides configuration for a tracing backend</p>
+
+</td>
+</tr>
+<tr id="ProxyConfig-trace_sampling">
+<td><code>traceSampling</code></td>
+<td><code><a href="#TraceSampling">TraceSampling</a></code></td>
+<td>
+<p>Controls the rate of trace generation.</p>
+
+</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -588,6 +629,171 @@ source IP addresses during redirection.</p>
 source and destination IP addresses and ports, so that they can be used for advanced
 filtering and manipulation. This mode also configures the sidecar to run with the
 CAP<em>NET</em>ADMIN capability, which is required to use TPROXY.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TraceCollector">TraceCollector</h2>
+<section>
+<p>TraceCollector holds the configuration for a specific tracing backend.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TraceCollector-zipkin_collector" class="oneof oneof-start">
+<td><code>zipkinCollector</code></td>
+<td><code><a href="#ZipkinCollector">ZipkinCollector (oneof)</a></code></td>
+<td>
+<p>Configuration information for a Zipkin trace collector.</p>
+
+</td>
+</tr>
+<tr id="TraceCollector-lightstep_collector" class="oneof">
+<td><code>lightstepCollector</code></td>
+<td><code><a href="#LightStepCollector">LightStepCollector (oneof)</a></code></td>
+<td>
+<p>Configuration information for a LightStep trace collector.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TraceSampling">TraceSampling</h2>
+<section>
+<p>Controls the rate at which Istio will generate trace spans for requests
+within a mesh.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TraceSampling-mode">
+<td><code>mode</code></td>
+<td><code><a href="#TraceSampling-Mode">TraceSampling.Mode</a></code></td>
+<td>
+<p>Required. Trace generation mode.</p>
+
+<p>Default: NONE</p>
+
+</td>
+</tr>
+<tr id="TraceSampling-client_sampling">
+<td><code>clientSampling</code></td>
+<td><code><a href="#Percent">Percent</a></code></td>
+<td>
+<p>Target percentage of requests that will be force traced if requested
+by a client.</p>
+
+<p>Optional. Only valid when mode is set to CUSTOM.</p>
+
+<p>Default: 0.0%</p>
+
+</td>
+</tr>
+<tr id="TraceSampling-random_sampling">
+<td><code>randomSampling</code></td>
+<td><code><a href="#Percent">Percent</a></code></td>
+<td>
+<p>Target percentage of requests managed that will be randomly selected for
+trace generation, if not requested by the client.</p>
+
+<p>Optional. Only valid when mode is set to CUSTOM.</p>
+
+<p>Default: 0.0%</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TraceSampling-Mode">TraceSampling.Mode</h2>
+<section>
+<p>Controls the mode of sampling.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TraceSampling-Mode-NONE">
+<td><code>NONE</code></td>
+<td>
+<p>Do NOT generate trace spans.</p>
+
+</td>
+</tr>
+<tr id="TraceSampling-Mode-MINIMAL">
+<td><code>MINIMAL</code></td>
+<td>
+<p>Use the pre-configured minimal trace span generation settings.
+This will generate trace spans for 1% of all requests (and 100% for
+client-directed forced traces).</p>
+
+</td>
+</tr>
+<tr id="TraceSampling-Mode-CUSTOM">
+<td><code>CUSTOM</code></td>
+<td>
+<p>Use a custom sampling configuration.</p>
+
+</td>
+</tr>
+<tr id="TraceSampling-Mode-ALL">
+<td><code>ALL</code></td>
+<td>
+<p>Generate trace spans for 100% of requests, client-requested or
+otherwise.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ZipkinCollector">ZipkinCollector</h2>
+<section>
+<p>Configuration for a Zipkin collector.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ZipkinCollector-host">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+<p>Required. Address of the Zipkin service (e.g. <em>zipkin:9411</em>).</p>
+
+</td>
+</tr>
+<tr id="ZipkinCollector-api_endpoint">
+<td><code>apiEndpoint</code></td>
+<td><code>string</code></td>
+<td>
+<p>Optional. API endpoint of the Zipkin service.</p>
+
+<p>Default: &ldquo;/api/v1/spans&rdquo;</p>
 
 </td>
 </tr>

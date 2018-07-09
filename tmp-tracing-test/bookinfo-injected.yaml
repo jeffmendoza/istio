@@ -1,0 +1,149 @@
+# Copyright 2017 Istio Authors
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  ports:
+  - port: 27017
+    name: mongo
+  selector:
+    app: mongodb
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: mongodb-v1
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/status: '{"version":"57b13648c3c03841bfec376a256629186192b434ef89e28d4e537eb7f50a3963","initContainers":["istio-init"],"containers":["istio-proxy"],"volumes":["istio-envoy","istio-certs"],"imagePullSecrets":null}'
+      creationTimestamp: null
+      labels:
+        app: mongodb
+        version: v1
+    spec:
+      containers:
+      - image: istio/examples-bookinfo-mongodb:1.5.0
+        imagePullPolicy: IfNotPresent
+        name: mongodb
+        ports:
+        - containerPort: 27017
+        resources: {}
+      - args:
+        - proxy
+        - sidecar
+        - --configPath
+        - /etc/istio/proxy
+        - --binaryPath
+        - /usr/local/bin/envoy
+        - --serviceCluster
+        - mongodb
+        - --drainDuration
+        - 45s
+        - --parentShutdownDuration
+        - 1m0s
+        - --discoveryAddress
+        - istio-pilot.istio-system:15005
+        - --discoveryRefreshDelay
+        - 1s
+        - --zipkinAddress
+        - my-cool-tracer.istio-system:9411
+        - --connectTimeout
+        - 10s
+        - --statsdUdpAddress
+        - istio-statsd-prom-bridge.istio-system:9125
+        - --proxyAdminPort
+        - "15000"
+        - --controlPlaneAuthPolicy
+        - MUTUAL_TLS
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: INSTANCE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: ISTIO_META_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: ISTIO_META_INTERCEPTION_MODE
+          value: REDIRECT
+        image: gcr.io/context-istio-test/proxy:dev
+        imagePullPolicy: IfNotPresent
+        name: istio-proxy
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsUser: 1337
+        volumeMounts:
+        - mountPath: /etc/istio/proxy
+          name: istio-envoy
+        - mountPath: /etc/certs/
+          name: istio-certs
+          readOnly: true
+      initContainers:
+      - args:
+        - -p
+        - "15001"
+        - -u
+        - "1337"
+        - -m
+        - REDIRECT
+        - -i
+        - '*'
+        - -x
+        - ""
+        - -b
+        - 27017,
+        - -d
+        - ""
+        image: gcr.io/context-istio-test/proxy_init:dev
+        imagePullPolicy: IfNotPresent
+        name: istio-init
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+          privileged: true
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: istio-envoy
+      - name: istio-certs
+        secret:
+          optional: true
+          secretName: istio.default
+status: {}
+---

@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='mesh/v1alpha1/config.proto',
   package='istio.mesh.v1alpha1',
   syntax='proto3',
-  serialized_pb=_b('\n\x1amesh/v1alpha1/config.proto\x12\x13istio.mesh.v1alpha1\x1a\x1egoogle/protobuf/duration.proto\"\xfe\x05\n\x0bProxyConfig\x12\x13\n\x0b\x63onfig_path\x18\x01 \x01(\t\x12\x13\n\x0b\x62inary_path\x18\x02 \x01(\t\x12\x17\n\x0fservice_cluster\x18\x03 \x01(\t\x12\x31\n\x0e\x64rain_duration\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\x12;\n\x18parent_shutdown_duration\x18\x05 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x19\n\x11\x64iscovery_address\x18\x06 \x01(\t\x12:\n\x17\x64iscovery_refresh_delay\x18\x07 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x16\n\x0ezipkin_address\x18\x08 \x01(\t\x12\x32\n\x0f\x63onnect_timeout\x18\t \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x1a\n\x12statsd_udp_address\x18\n \x01(\t\x12\x18\n\x10proxy_admin_port\x18\x0b \x01(\x05\x12\x19\n\x11\x61vailability_zone\x18\x0c \x01(\t\x12L\n\x19\x63ontrol_plane_auth_policy\x18\r \x01(\x0e\x32).istio.mesh.v1alpha1.AuthenticationPolicy\x12\x1a\n\x12\x63ustom_config_file\x18\x0e \x01(\t\x12\x18\n\x10stat_name_length\x18\x0f \x01(\x05\x12\x13\n\x0b\x63oncurrency\x18\x10 \x01(\x05\x12%\n\x1dproxy_bootstrap_template_path\x18\x11 \x01(\t\x12S\n\x11interception_mode\x18\x12 \x01(\x0e\x32\x38.istio.mesh.v1alpha1.ProxyConfig.InboundInterceptionMode\"3\n\x17InboundInterceptionMode\x12\x0c\n\x08REDIRECT\x10\x00\x12\n\n\x06TPROXY\x10\x01\"\xb5\x08\n\nMeshConfig\x12\x1a\n\x12mixer_check_server\x18\x01 \x01(\t\x12\x1b\n\x13mixer_report_server\x18\x02 \x01(\t\x12\x1d\n\x15\x64isable_policy_checks\x18\x03 \x01(\x08\x12\x19\n\x11proxy_listen_port\x18\x04 \x01(\x05\x12\x17\n\x0fproxy_http_port\x18\x05 \x01(\x05\x12\x32\n\x0f\x63onnect_timeout\x18\x06 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x15\n\ringress_class\x18\x07 \x01(\t\x12\x17\n\x0fingress_service\x18\x08 \x01(\t\x12V\n\x17ingress_controller_mode\x18\t \x01(\x0e\x32\x35.istio.mesh.v1alpha1.MeshConfig.IngressControllerMode\x12\x43\n\x0b\x61uth_policy\x18\n \x01(\x0e\x32*.istio.mesh.v1alpha1.MeshConfig.AuthPolicyB\x02\x18\x01\x12\x34\n\x11rds_refresh_delay\x18\x0b \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x16\n\x0e\x65nable_tracing\x18\x0c \x01(\x08\x12\x17\n\x0f\x61\x63\x63\x65ss_log_file\x18\r \x01(\t\x12\x38\n\x0e\x64\x65\x66\x61ult_config\x18\x0e \x01(\x0b\x32 .istio.mesh.v1alpha1.ProxyConfig\x12\x15\n\rmixer_address\x18\x10 \x01(\t\x12V\n\x17outbound_traffic_policy\x18\x11 \x01(\x0b\x32\x35.istio.mesh.v1alpha1.MeshConfig.OutboundTrafficPolicy\x12\'\n\x1f\x65nable_client_side_policy_check\x18\x13 \x01(\x08\x12\x14\n\x0csds_uds_path\x18\x14 \x01(\t\x12\x34\n\x11sds_refresh_delay\x18\x15 \x01(\x0b\x32\x19.google.protobuf.Duration\x1a\xa5\x01\n\x15OutboundTrafficPolicy\x12H\n\x04mode\x18\x01 \x01(\x0e\x32:.istio.mesh.v1alpha1.MeshConfig.OutboundTrafficPolicy.Mode\"B\n\x04Mode\x12\x11\n\rREGISTRY_ONLY\x10\x00\x12\r\n\tALLOW_ANY\x10\x01\x12\x18\n\x14VIRTUAL_SERVICE_ONLY\x10\x02\"9\n\x15IngressControllerMode\x12\x07\n\x03OFF\x10\x00\x12\x0b\n\x07\x44\x45\x46\x41ULT\x10\x01\x12\n\n\x06STRICT\x10\x02\"&\n\nAuthPolicy\x12\x08\n\x04NONE\x10\x00\x12\x0e\n\nMUTUAL_TLS\x10\x01J\x04\x08\x0f\x10\x10J\x04\x08\x12\x10\x13*>\n\x14\x41uthenticationPolicy\x12\x08\n\x04NONE\x10\x00\x12\x0e\n\nMUTUAL_TLS\x10\x01\x12\x0c\n\x07INHERIT\x10\xe8\x07\x42\x1cZ\x1aistio.io/api/mesh/v1alpha1b\x06proto3')
+  serialized_pb=_b('\n\x1amesh/v1alpha1/config.proto\x12\x13istio.mesh.v1alpha1\x1a\x1egoogle/protobuf/duration.proto\"\xf8\x06\n\x0bProxyConfig\x12\x13\n\x0b\x63onfig_path\x18\x01 \x01(\t\x12\x13\n\x0b\x62inary_path\x18\x02 \x01(\t\x12\x17\n\x0fservice_cluster\x18\x03 \x01(\t\x12\x31\n\x0e\x64rain_duration\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\x12;\n\x18parent_shutdown_duration\x18\x05 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x19\n\x11\x64iscovery_address\x18\x06 \x01(\t\x12:\n\x17\x64iscovery_refresh_delay\x18\x07 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x16\n\x0ezipkin_address\x18\x08 \x01(\t\x12\x32\n\x0f\x63onnect_timeout\x18\t \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x1a\n\x12statsd_udp_address\x18\n \x01(\t\x12\x18\n\x10proxy_admin_port\x18\x0b \x01(\x05\x12\x19\n\x11\x61vailability_zone\x18\x0c \x01(\t\x12L\n\x19\x63ontrol_plane_auth_policy\x18\r \x01(\x0e\x32).istio.mesh.v1alpha1.AuthenticationPolicy\x12\x1a\n\x12\x63ustom_config_file\x18\x0e \x01(\t\x12\x18\n\x10stat_name_length\x18\x0f \x01(\x05\x12\x13\n\x0b\x63oncurrency\x18\x10 \x01(\x05\x12%\n\x1dproxy_bootstrap_template_path\x18\x11 \x01(\t\x12S\n\x11interception_mode\x18\x12 \x01(\x0e\x32\x38.istio.mesh.v1alpha1.ProxyConfig.InboundInterceptionMode\x12<\n\x0ftrace_collector\x18\x13 \x01(\x0b\x32#.istio.mesh.v1alpha1.TraceCollector\x12:\n\x0etrace_sampling\x18\x14 \x01(\x0b\x32\".istio.mesh.v1alpha1.TraceSampling\"3\n\x17InboundInterceptionMode\x12\x0c\n\x08REDIRECT\x10\x00\x12\n\n\x06TPROXY\x10\x01\"\xa7\x01\n\x0eTraceCollector\x12@\n\x10zipkin_collector\x18\x01 \x01(\x0b\x32$.istio.mesh.v1alpha1.ZipkinCollectorH\x00\x12\x46\n\x13lightstep_collector\x18\x02 \x01(\x0b\x32\'.istio.mesh.v1alpha1.LightStepCollectorH\x00\x42\x0b\n\tcollector\"5\n\x0fZipkinCollector\x12\x0c\n\x04host\x18\x01 \x01(\t\x12\x14\n\x0c\x61pi_endpoint\x18\x02 \x01(\t\"=\n\x12LightStepCollector\x12\x0c\n\x04host\x18\x01 \x01(\t\x12\x19\n\x11\x61\x63\x63\x65ss_token_file\x18\x02 \x01(\t\"\x18\n\x07Percent\x12\r\n\x05value\x18\x01 \x01(\x01\"\xe8\x01\n\rTraceSampling\x12\x35\n\x04mode\x18\x01 \x01(\x0e\x32\'.istio.mesh.v1alpha1.TraceSampling.Mode\x12\x35\n\x0f\x63lient_sampling\x18\x02 \x01(\x0b\x32\x1c.istio.mesh.v1alpha1.Percent\x12\x35\n\x0frandom_sampling\x18\x03 \x01(\x0b\x32\x1c.istio.mesh.v1alpha1.Percent\"2\n\x04Mode\x12\x08\n\x04NONE\x10\x00\x12\x0b\n\x07MINIMAL\x10\x01\x12\n\n\x06\x43USTOM\x10\x02\x12\x07\n\x03\x41LL\x10\x03\"\xb5\x08\n\nMeshConfig\x12\x1a\n\x12mixer_check_server\x18\x01 \x01(\t\x12\x1b\n\x13mixer_report_server\x18\x02 \x01(\t\x12\x1d\n\x15\x64isable_policy_checks\x18\x03 \x01(\x08\x12\x19\n\x11proxy_listen_port\x18\x04 \x01(\x05\x12\x17\n\x0fproxy_http_port\x18\x05 \x01(\x05\x12\x32\n\x0f\x63onnect_timeout\x18\x06 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x15\n\ringress_class\x18\x07 \x01(\t\x12\x17\n\x0fingress_service\x18\x08 \x01(\t\x12V\n\x17ingress_controller_mode\x18\t \x01(\x0e\x32\x35.istio.mesh.v1alpha1.MeshConfig.IngressControllerMode\x12\x43\n\x0b\x61uth_policy\x18\n \x01(\x0e\x32*.istio.mesh.v1alpha1.MeshConfig.AuthPolicyB\x02\x18\x01\x12\x34\n\x11rds_refresh_delay\x18\x0b \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x16\n\x0e\x65nable_tracing\x18\x0c \x01(\x08\x12\x17\n\x0f\x61\x63\x63\x65ss_log_file\x18\r \x01(\t\x12\x38\n\x0e\x64\x65\x66\x61ult_config\x18\x0e \x01(\x0b\x32 .istio.mesh.v1alpha1.ProxyConfig\x12\x15\n\rmixer_address\x18\x10 \x01(\t\x12V\n\x17outbound_traffic_policy\x18\x11 \x01(\x0b\x32\x35.istio.mesh.v1alpha1.MeshConfig.OutboundTrafficPolicy\x12\'\n\x1f\x65nable_client_side_policy_check\x18\x13 \x01(\x08\x12\x14\n\x0csds_uds_path\x18\x14 \x01(\t\x12\x34\n\x11sds_refresh_delay\x18\x15 \x01(\x0b\x32\x19.google.protobuf.Duration\x1a\xa5\x01\n\x15OutboundTrafficPolicy\x12H\n\x04mode\x18\x01 \x01(\x0e\x32:.istio.mesh.v1alpha1.MeshConfig.OutboundTrafficPolicy.Mode\"B\n\x04Mode\x12\x11\n\rREGISTRY_ONLY\x10\x00\x12\r\n\tALLOW_ANY\x10\x01\x12\x18\n\x14VIRTUAL_SERVICE_ONLY\x10\x02\"9\n\x15IngressControllerMode\x12\x07\n\x03OFF\x10\x00\x12\x0b\n\x07\x44\x45\x46\x41ULT\x10\x01\x12\n\n\x06STRICT\x10\x02\"&\n\nAuthPolicy\x12\x08\n\x04NONE\x10\x00\x12\x0e\n\nMUTUAL_TLS\x10\x01J\x04\x08\x0f\x10\x10J\x04\x08\x12\x10\x13*>\n\x14\x41uthenticationPolicy\x12\x08\n\x04NONE\x10\x00\x12\x0e\n\nMUTUAL_TLS\x10\x01\x12\x0c\n\x07INHERIT\x10\xe8\x07\x42\x1cZ\x1aistio.io/api/mesh/v1alpha1b\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,])
 
@@ -46,8 +46,8 @@ _AUTHENTICATIONPOLICY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1932,
-  serialized_end=1994,
+  serialized_start=2603,
+  serialized_end=2665,
 )
 _sym_db.RegisterEnumDescriptor(_AUTHENTICATIONPOLICY)
 
@@ -74,10 +74,40 @@ _PROXYCONFIG_INBOUNDINTERCEPTIONMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=799,
-  serialized_end=850,
+  serialized_start=921,
+  serialized_end=972,
 )
 _sym_db.RegisterEnumDescriptor(_PROXYCONFIG_INBOUNDINTERCEPTIONMODE)
+
+_TRACESAMPLING_MODE = _descriptor.EnumDescriptor(
+  name='Mode',
+  full_name='istio.mesh.v1alpha1.TraceSampling.Mode',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='NONE', index=0, number=0,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='MINIMAL', index=1, number=1,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='CUSTOM', index=2, number=2,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='ALL', index=3, number=3,
+      options=None,
+      type=None),
+  ],
+  containing_type=None,
+  options=None,
+  serialized_start=1471,
+  serialized_end=1521,
+)
+_sym_db.RegisterEnumDescriptor(_TRACESAMPLING_MODE)
 
 _MESHCONFIG_OUTBOUNDTRAFFICPOLICY_MODE = _descriptor.EnumDescriptor(
   name='Mode',
@@ -100,8 +130,8 @@ _MESHCONFIG_OUTBOUNDTRAFFICPOLICY_MODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1753,
-  serialized_end=1819,
+  serialized_start=2424,
+  serialized_end=2490,
 )
 _sym_db.RegisterEnumDescriptor(_MESHCONFIG_OUTBOUNDTRAFFICPOLICY_MODE)
 
@@ -126,8 +156,8 @@ _MESHCONFIG_INGRESSCONTROLLERMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1821,
-  serialized_end=1878,
+  serialized_start=2492,
+  serialized_end=2549,
 )
 _sym_db.RegisterEnumDescriptor(_MESHCONFIG_INGRESSCONTROLLERMODE)
 
@@ -148,8 +178,8 @@ _MESHCONFIG_AUTHPOLICY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1880,
-  serialized_end=1918,
+  serialized_start=2551,
+  serialized_end=2589,
 )
 _sym_db.RegisterEnumDescriptor(_MESHCONFIG_AUTHPOLICY)
 
@@ -287,6 +317,20 @@ _PROXYCONFIG = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='trace_collector', full_name='istio.mesh.v1alpha1.ProxyConfig.trace_collector', index=18,
+      number=19, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='trace_sampling', full_name='istio.mesh.v1alpha1.ProxyConfig.trace_sampling', index=19,
+      number=20, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -301,7 +345,201 @@ _PROXYCONFIG = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=84,
-  serialized_end=850,
+  serialized_end=972,
+)
+
+
+_TRACECOLLECTOR = _descriptor.Descriptor(
+  name='TraceCollector',
+  full_name='istio.mesh.v1alpha1.TraceCollector',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='zipkin_collector', full_name='istio.mesh.v1alpha1.TraceCollector.zipkin_collector', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='lightstep_collector', full_name='istio.mesh.v1alpha1.TraceCollector.lightstep_collector', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='collector', full_name='istio.mesh.v1alpha1.TraceCollector.collector',
+      index=0, containing_type=None, fields=[]),
+  ],
+  serialized_start=975,
+  serialized_end=1142,
+)
+
+
+_ZIPKINCOLLECTOR = _descriptor.Descriptor(
+  name='ZipkinCollector',
+  full_name='istio.mesh.v1alpha1.ZipkinCollector',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='host', full_name='istio.mesh.v1alpha1.ZipkinCollector.host', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='api_endpoint', full_name='istio.mesh.v1alpha1.ZipkinCollector.api_endpoint', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1144,
+  serialized_end=1197,
+)
+
+
+_LIGHTSTEPCOLLECTOR = _descriptor.Descriptor(
+  name='LightStepCollector',
+  full_name='istio.mesh.v1alpha1.LightStepCollector',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='host', full_name='istio.mesh.v1alpha1.LightStepCollector.host', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='access_token_file', full_name='istio.mesh.v1alpha1.LightStepCollector.access_token_file', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1199,
+  serialized_end=1260,
+)
+
+
+_PERCENT = _descriptor.Descriptor(
+  name='Percent',
+  full_name='istio.mesh.v1alpha1.Percent',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value', full_name='istio.mesh.v1alpha1.Percent.value', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1262,
+  serialized_end=1286,
+)
+
+
+_TRACESAMPLING = _descriptor.Descriptor(
+  name='TraceSampling',
+  full_name='istio.mesh.v1alpha1.TraceSampling',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='mode', full_name='istio.mesh.v1alpha1.TraceSampling.mode', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='client_sampling', full_name='istio.mesh.v1alpha1.TraceSampling.client_sampling', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='random_sampling', full_name='istio.mesh.v1alpha1.TraceSampling.random_sampling', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _TRACESAMPLING_MODE,
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1289,
+  serialized_end=1521,
 )
 
 
@@ -332,8 +570,8 @@ _MESHCONFIG_OUTBOUNDTRAFFICPOLICY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1654,
-  serialized_end=1819,
+  serialized_start=2325,
+  serialized_end=2490,
 )
 
 _MESHCONFIG = _descriptor.Descriptor(
@@ -490,8 +728,8 @@ _MESHCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=853,
-  serialized_end=1930,
+  serialized_start=1524,
+  serialized_end=2601,
 )
 
 _PROXYCONFIG.fields_by_name['drain_duration'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
@@ -500,7 +738,21 @@ _PROXYCONFIG.fields_by_name['discovery_refresh_delay'].message_type = google_dot
 _PROXYCONFIG.fields_by_name['connect_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _PROXYCONFIG.fields_by_name['control_plane_auth_policy'].enum_type = _AUTHENTICATIONPOLICY
 _PROXYCONFIG.fields_by_name['interception_mode'].enum_type = _PROXYCONFIG_INBOUNDINTERCEPTIONMODE
+_PROXYCONFIG.fields_by_name['trace_collector'].message_type = _TRACECOLLECTOR
+_PROXYCONFIG.fields_by_name['trace_sampling'].message_type = _TRACESAMPLING
 _PROXYCONFIG_INBOUNDINTERCEPTIONMODE.containing_type = _PROXYCONFIG
+_TRACECOLLECTOR.fields_by_name['zipkin_collector'].message_type = _ZIPKINCOLLECTOR
+_TRACECOLLECTOR.fields_by_name['lightstep_collector'].message_type = _LIGHTSTEPCOLLECTOR
+_TRACECOLLECTOR.oneofs_by_name['collector'].fields.append(
+  _TRACECOLLECTOR.fields_by_name['zipkin_collector'])
+_TRACECOLLECTOR.fields_by_name['zipkin_collector'].containing_oneof = _TRACECOLLECTOR.oneofs_by_name['collector']
+_TRACECOLLECTOR.oneofs_by_name['collector'].fields.append(
+  _TRACECOLLECTOR.fields_by_name['lightstep_collector'])
+_TRACECOLLECTOR.fields_by_name['lightstep_collector'].containing_oneof = _TRACECOLLECTOR.oneofs_by_name['collector']
+_TRACESAMPLING.fields_by_name['mode'].enum_type = _TRACESAMPLING_MODE
+_TRACESAMPLING.fields_by_name['client_sampling'].message_type = _PERCENT
+_TRACESAMPLING.fields_by_name['random_sampling'].message_type = _PERCENT
+_TRACESAMPLING_MODE.containing_type = _TRACESAMPLING
 _MESHCONFIG_OUTBOUNDTRAFFICPOLICY.fields_by_name['mode'].enum_type = _MESHCONFIG_OUTBOUNDTRAFFICPOLICY_MODE
 _MESHCONFIG_OUTBOUNDTRAFFICPOLICY.containing_type = _MESHCONFIG
 _MESHCONFIG_OUTBOUNDTRAFFICPOLICY_MODE.containing_type = _MESHCONFIG_OUTBOUNDTRAFFICPOLICY
@@ -514,6 +766,11 @@ _MESHCONFIG.fields_by_name['sds_refresh_delay'].message_type = google_dot_protob
 _MESHCONFIG_INGRESSCONTROLLERMODE.containing_type = _MESHCONFIG
 _MESHCONFIG_AUTHPOLICY.containing_type = _MESHCONFIG
 DESCRIPTOR.message_types_by_name['ProxyConfig'] = _PROXYCONFIG
+DESCRIPTOR.message_types_by_name['TraceCollector'] = _TRACECOLLECTOR
+DESCRIPTOR.message_types_by_name['ZipkinCollector'] = _ZIPKINCOLLECTOR
+DESCRIPTOR.message_types_by_name['LightStepCollector'] = _LIGHTSTEPCOLLECTOR
+DESCRIPTOR.message_types_by_name['Percent'] = _PERCENT
+DESCRIPTOR.message_types_by_name['TraceSampling'] = _TRACESAMPLING
 DESCRIPTOR.message_types_by_name['MeshConfig'] = _MESHCONFIG
 DESCRIPTOR.enum_types_by_name['AuthenticationPolicy'] = _AUTHENTICATIONPOLICY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -524,6 +781,41 @@ ProxyConfig = _reflection.GeneratedProtocolMessageType('ProxyConfig', (_message.
   # @@protoc_insertion_point(class_scope:istio.mesh.v1alpha1.ProxyConfig)
   ))
 _sym_db.RegisterMessage(ProxyConfig)
+
+TraceCollector = _reflection.GeneratedProtocolMessageType('TraceCollector', (_message.Message,), dict(
+  DESCRIPTOR = _TRACECOLLECTOR,
+  __module__ = 'mesh.v1alpha1.config_pb2'
+  # @@protoc_insertion_point(class_scope:istio.mesh.v1alpha1.TraceCollector)
+  ))
+_sym_db.RegisterMessage(TraceCollector)
+
+ZipkinCollector = _reflection.GeneratedProtocolMessageType('ZipkinCollector', (_message.Message,), dict(
+  DESCRIPTOR = _ZIPKINCOLLECTOR,
+  __module__ = 'mesh.v1alpha1.config_pb2'
+  # @@protoc_insertion_point(class_scope:istio.mesh.v1alpha1.ZipkinCollector)
+  ))
+_sym_db.RegisterMessage(ZipkinCollector)
+
+LightStepCollector = _reflection.GeneratedProtocolMessageType('LightStepCollector', (_message.Message,), dict(
+  DESCRIPTOR = _LIGHTSTEPCOLLECTOR,
+  __module__ = 'mesh.v1alpha1.config_pb2'
+  # @@protoc_insertion_point(class_scope:istio.mesh.v1alpha1.LightStepCollector)
+  ))
+_sym_db.RegisterMessage(LightStepCollector)
+
+Percent = _reflection.GeneratedProtocolMessageType('Percent', (_message.Message,), dict(
+  DESCRIPTOR = _PERCENT,
+  __module__ = 'mesh.v1alpha1.config_pb2'
+  # @@protoc_insertion_point(class_scope:istio.mesh.v1alpha1.Percent)
+  ))
+_sym_db.RegisterMessage(Percent)
+
+TraceSampling = _reflection.GeneratedProtocolMessageType('TraceSampling', (_message.Message,), dict(
+  DESCRIPTOR = _TRACESAMPLING,
+  __module__ = 'mesh.v1alpha1.config_pb2'
+  # @@protoc_insertion_point(class_scope:istio.mesh.v1alpha1.TraceSampling)
+  ))
+_sym_db.RegisterMessage(TraceSampling)
 
 MeshConfig = _reflection.GeneratedProtocolMessageType('MeshConfig', (_message.Message,), dict(
 

@@ -1,0 +1,6 @@
+    [[ //if ne .ProxyConfig.TraceCollector.ZipkinCollector nil -]]
+    - --zipkinAddress
+    - [[ //.ProxyConfig.TraceCollector.ZipkinCollector.Host ]]
+    - --zipkinEndpoint
+    - [[ //.ProxyConfig.TraceCollector.ZipkinCollector.ApiEndpoint ]]
+    [[ //end -]]

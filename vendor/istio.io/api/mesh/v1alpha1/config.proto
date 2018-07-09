@@ -82,6 +82,7 @@ message ProxyConfig {
   google.protobuf.Duration discovery_refresh_delay = 7;
 
   // Address of the Zipkin service (e.g. _zipkin:9411_).
+  // Deprecated - will use trace_collector first, fall back to this.
   string zipkin_address = 8;
 
   // Connection timeout used by Envoy for supporting services. (MUST BE >=1ms)
@@ -133,6 +134,97 @@ message ProxyConfig {
 
   // The mode used to redirect inbound traffic to Envoy.
   InboundInterceptionMode interception_mode = 18;
+
+  // Provides configuration for a tracing backend
+  TraceCollector trace_collector = 19;
+
+  // Controls the rate of trace generation.
+  TraceSampling trace_sampling = 20;
+}
+
+// TraceCollector holds the configuration for a specific tracing backend.
+message TraceCollector {
+    oneof collector {
+        // Configuration information for a Zipkin trace collector.
+        ZipkinCollector zipkin_collector = 1;
+
+        // Configuration information for a LightStep trace collector.
+        LightStepCollector lightstep_collector = 2;
+    }
+}
+
+// Configuration for a Zipkin collector.
+message ZipkinCollector {
+
+    // Required. Address of the Zipkin service (e.g. _zipkin:9411_).
+    string host = 1;
+
+    // Optional. API endpoint of the Zipkin service.
+    //
+    // Default: "/api/v1/spans"
+    string api_endpoint = 2;
+}
+
+// Configuration for a LightStep collector.
+message LightStepCollector {
+
+    // Required. Address of the LightStep service (e.g. _collector-grpc.lightstep.com:443_).
+    string host = 1;
+
+    // Required. File containing the access token for the LightStep API.
+    //
+    // Default: "/app/access_token"
+    string access_token_file = 2;
+}
+
+// Identifies a percentage.
+message Percent {
+    // Valid range: `[0.0, 100.0]`
+    double value = 1;
+}
+
+// Controls the rate at which Istio will generate trace spans for requests
+// within a mesh.
+message TraceSampling {
+
+    // Controls the mode of sampling.
+    enum Mode {
+        // Do NOT generate trace spans.
+        NONE = 0;
+
+        // Use the pre-configured minimal trace span generation settings.
+        // This will generate trace spans for 1% of all requests (and 100% for
+        // client-directed forced traces).
+        MINIMAL = 1;
+
+        // Use a custom sampling configuration.
+        CUSTOM = 2;
+
+        // Generate trace spans for 100% of requests, client-requested or
+        // otherwise.
+        ALL = 3;
+    }
+
+    // Required. Trace generation mode.
+    //
+    // Default: NONE
+    Mode mode = 1;
+
+    // Target percentage of requests that will be force traced if requested
+    // by a client.
+    //
+    // Optional. Only valid when mode is set to CUSTOM.
+    //
+    // Default: 0.0%
+    Percent client_sampling = 2;
+
+    // Target percentage of requests managed that will be randomly selected for
+    // trace generation, if not requested by the client.
+    //
+    // Optional. Only valid when mode is set to CUSTOM.
+    //
+    // Default: 0.0%
+    Percent random_sampling = 3;
 }
 
 // MeshConfig defines mesh-wide variables shared by all Envoy instances in the

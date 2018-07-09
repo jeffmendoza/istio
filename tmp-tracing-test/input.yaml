@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: foo-v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: foo
+        version: v1
+    spec:
+      containers:
+      - name: mysqldb
+        image: istio/examples-bookinfo-mysqldb:1.5.0
