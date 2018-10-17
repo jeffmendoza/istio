@@ -47,6 +47,8 @@ syntax = "proto3";
 //   destinationOwner: destination.owner | "Unknown"
 //   destinationWorkloadName: destination.workload.name | "Unknown"
 //   destinationWorkloadNamespace: destination.workload.namespace | "Unknown"
+//   destinationServiceName: destination.service.name | "Unknown"
+//   destinationServiceNamespace: destination.service.namespace | "Unknown"
 //   apiProtocol: api.protocol | "Unknown"
 //   contextProtocol: context.protocol | "Unknown"
 // ```
@@ -125,6 +127,12 @@ message InstanceMsg {
     
     string destination_uid = 23;
     
+    
+    string destination_service_namespace = 24;
+    
+    
+    string destination_service_name = 25;
+    
     // Protocol used
     string context_protocol = 30;
     
@@ -168,6 +176,12 @@ message InstanceParam {
     
     
     string destination_uid = 23;
+    
+    
+    string destination_service_namespace = 24;
+    
+    
+    string destination_service_name = 25;
     
     // Protocol used
     string context_protocol = 30;
