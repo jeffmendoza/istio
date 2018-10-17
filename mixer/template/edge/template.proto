@@ -76,5 +76,4 @@ message Template {
   // Protocol used
   string context_protocol = 30;
   string api_protocol = 31;
-
 }

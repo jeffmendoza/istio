@@ -121,7 +121,8 @@ func (h *handler) send(ctx context.Context, t time.Time, entitiesToSend []entity
 
 	// TODO: Batch requests if there are too many entities and edges in one request.
 
-	h.env.Logger().Debugf("Context api request: %s", req)
+	h.env.Logger().Debugf("Sending Context Graph AssertBatch with %v entities, and %v relationships",
+		len(req.EntityPresentAssertions), len(req.RelationshipPresentAssertions))
 	if _, err := h.assertBatch(ctx, req); err != nil {
 		s, _ := status.FromError(err)
 		if d := s.Proto().Details; len(d) > 0 {
