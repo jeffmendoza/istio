@@ -49,7 +49,7 @@ func init() {
 	b := resource.NewSchemaBuilder()
 	b.RegisterInfo(metadata.K8sCoreV1Pods)
 	b.RegisterInfo(metadata.K8sCoreV1Nodes)
-	b.RegisterInfo(metadata.K8sCoreV1Services)
+	//b.RegisterInfo(metadata.K8sCoreV1Services)
 	b.RegisterInfo(metadata.K8sCoreV1Endpoints)
 	Schema = b.Build()
 }
