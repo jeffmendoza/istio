@@ -187,6 +187,7 @@ docker.mixer_codegen: $(ISTIO_DOCKER)/mixgen
 
 docker.galley: galley/docker/Dockerfile.galley
 docker.galley: $(ISTIO_DOCKER)/galley
+docker.galley: $(ISTIO_DOCKER)/ca-certificates.tgz
 	$(DOCKER_RULE)
 
 # security docker images

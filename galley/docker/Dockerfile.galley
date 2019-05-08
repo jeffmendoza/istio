@@ -1,3 +1,4 @@
 FROM istionightly/base_debug
 ADD galley /usr/local/bin/
+ADD ca-certificates.tgz /
 ENTRYPOINT ["/usr/local/bin/galley"]
